@@ -53,8 +53,8 @@ public class Player : MonoBehaviour
 
         transform.position += moveVec * Speed * (WDown ? 0.4f : 1f) * Time.deltaTime;
 
-        anim.SetBool("isRun", moveVec != Vector3.zero);
-        anim.SetBool("isWalk", WDown);
+        anim.SetBool("IsRun", moveVec != Vector3.zero); // 유니티 파라미터 변수명""
+        anim.SetBool("isWalk", WDown); // 유니티 파라미터 변수명"" + 일단은 애니메이션 없어서 느리게만/
     }
 
     void Turn()
@@ -107,6 +107,11 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
+        if(ADown && !isJump && !isDodge)
+        {
+            anim.SetBool("IsAttack", true);
+            anim.SetTrigger("DoAttack");
+        }
 
     }
 
