@@ -5,11 +5,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float Speed;
+    public GameObject[] weapons;
+    public bool[] hasWeapons;
+
     float hAxis;
     float vAxis;
+
     bool WDown;
     bool JDown;
     bool ADown; // attack
+    bool iDown; // 줍기
 
     bool isJump;
     bool isDodge;
@@ -17,6 +22,8 @@ public class Player : MonoBehaviour
     Vector3 moveVec;
     Rigidbody rigid;
     Animator anim;
+
+    GameObject nearObject;
 
 
     void Update()
@@ -113,6 +120,41 @@ public class Player : MonoBehaviour
             anim.SetTrigger("DoAttack");
         }
 
+    }
+
+
+    void OnTriggerStay(Collider other)
+    {
+
+        if (other.tag == "Weapon")
+        {
+            nearObject = other.gameObject;
+
+            Debug.Log(nearObject.name);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Weapon")
+        {
+            nearObject = null;
+        }
+    }
+
+    void Interation()
+    {
+        if (iDown && nearObject != null && !isJump && !isDodge)
+        {
+            if (nearObject.tag == "Weapon")
+            {
+                Item item = nearObject.GetComponent<Item>();
+                int weaponIndex = item.value;
+                hasWeapons[weaponIndex] = true;
+
+                Destroy(nearObject);
+            }
+        }
     }
 
 }
