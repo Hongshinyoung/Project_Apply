@@ -10,6 +10,7 @@ public enum Type { Coin, Heart, Weapon }; // enum 열거형 타입
 
     void Update()
     {
-        transform.Rotate(Vector3.up * 20 * Time.deltaTime);
+        // transform.Rotate(Vector3.up * 20 * Time.deltaTime);
+        transform.Rotate(Vector3.back * 20 * Time.deltaTime);
     }
 }
